@@ -15,20 +15,19 @@ services:
         env_file:
             - .env
         volumes:
-            - ./dags:/opt/airflow/dags
-            - ./logs:/opt/airflow/logs
+            - $FILES_PATH/dags:/opt/airflow/dags
+            # - $FILES_PATH/logs:/opt/airflow/logs
     webserver:
         image: apache/airflow:1.10.12-python3.6
         entrypoint: ./scripts/entrypoint.sh
         restart: always
         depends_on:
             - postgres
-            # - scheduler
         env_file:
             - .env
         volumes:
-            - ./dags:/opt/airflow/dags
-            - ./logs:/opt/airflow/logs
-            - ./scripts:/opt/airflow/scripts
+            - $FILES_PATH/dags:/opt/airflow/dags
+            # - $FILES_PATH/logs:/opt/airflow/logs
+            - $INSTALL_PATH/scripts:/opt/airflow/scripts
         ports:
             - "8080:8080"
